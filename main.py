@@ -41,7 +41,7 @@ while i < 45:
     if status == 0:
         prib = temp[3].text.strip()
         prib = [int(prib[0:2]), int(prib[3:5])]
-        if prib[0] * 60 + prib[1] - now.hour * 60 - now.minute <= 1:
+        if prib[0] * 60 + prib[1] - now.hour * 60 - now.minute <= 3:
             text = '''*Приехали в:* _{0}_
 *Стоим тутачки:* _{1}_
 
