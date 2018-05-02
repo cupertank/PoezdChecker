@@ -37,7 +37,7 @@ for i in handlers: dispatcher.add_handler(i)
 updater.start_polling()
 sleep(3)
 i = 9
-status = 1 #0 - едем, 1 - стоим
+status = 0 #0 - едем, 1 - стоим
 while i < 45:
     now = datetime.now(tz=tz('Europe/Moscow'))
     temp = date[i].findAll('td')
