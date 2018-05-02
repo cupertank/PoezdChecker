@@ -11,10 +11,13 @@ import os
 def start(bot, updater):
     if updater.message.chat_id not in users:
         users.append(updater.message.chat_id)
+        f = open('users.txt', 'w')
+        f.write(repr(users))
+        f.close()
     print(users)
 
 
-users = []
+users = eval(open('users.txt').readline())
 file = get('https://www.tutu.ru/poezda/view_d.php?np=b1d5d9')
 soup = BeautifulSoup(file.text.encode('utf-8'), 'html.parser')
 date = soup.find('tbody').findAll('tr')
@@ -33,7 +36,7 @@ handlers = [
 for i in handlers: dispatcher.add_handler(i)
 updater.start_polling()
 sleep(3)
-i = 1
+i = 9
 status = 1 #0 - едем, 1 - стоим
 while i < 45:
     now = datetime.now(tz=tz('Europe/Moscow'))
@@ -41,7 +44,7 @@ while i < 45:
     if status == 0:
         prib = temp[3].text.strip()
         prib = [int(prib[0:2]), int(prib[3:5])]
-        if prib[0] * 60 + prib[1] - now.hour * 60 - now.minute <= 3:
+        if prib[0] * 60 + prib[1] - now.hour * 60 - now.minute <= 1:
             text = '''*Приехали в:* _{0}_
 *Стоим тутачки:* _{1}_
 
@@ -54,7 +57,7 @@ while i < 45:
     elif status == 1:
         otprv = temp[5].text.strip()
         otprv = [int(otprv[0:2]), int(otprv[3:5])]
-        if now.hour * 60 + now.minute - otprv[0] * 60 - otprv[1] >= 1:
+        if now.hour * 60 + now.minute - otprv[0] * 60 - otprv[1] >= 0:
             i += 1
             temp = date[i].findAll('td')
             text = '''*Уезжаем*
