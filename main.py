@@ -33,8 +33,8 @@ handlers = [
 for i in handlers: dispatcher.add_handler(i)
 updater.start_polling()
 sleep(3)
-i = 3
-status = 0 #0 - едем, 1 - стоим
+i = 1
+status = 1 #0 - едем, 1 - стоим
 while i < 45:
     now = datetime.now(tz=tz('Europe/Moscow'))
     temp = date[i].findAll('td')
@@ -54,7 +54,7 @@ while i < 45:
     elif status == 1:
         otprv = temp[5].text.strip()
         otprv = [int(otprv[0:2]), int(otprv[3:5])]
-        if now.hour * 60 + now.minute - otprv[0] * 60 - otprv[1] <= 1:
+        if now.hour * 60 + now.minute - otprv[0] * 60 - otprv[1] >= 1:
             i += 1
             temp = date[i].findAll('td')
             text = '''*Уезжаем*
